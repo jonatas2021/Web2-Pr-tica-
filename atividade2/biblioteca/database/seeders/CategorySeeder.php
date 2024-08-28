@@ -2,20 +2,19 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Category;
 
 class CategorySeeder extends Seeder
 {
-    public function run(): void
+    public function run()
     {
-        $categories = [
-            'Ficção', 'Não-ficção', 'Fantasia', 'Ciência', 'Biografia',
-            'História', 'Tecnologia', 'Arte', 'Culinária', 'Viagem'
-        ];
-
-        foreach ($categories as $category) {
-            Category::firstOrCreate(['name' => $category]);
-        }
+        Category::create(['name' => 'Romance']);
+        Category::create(['name' => 'Fantasia']);
+        Category::create(['name' => 'Ficção Científica']);
+        Category::create(['name' => 'Ficção Brasileira']);
+        Category::create(['name' => 'Clássico']);
+        Category::create(['name' => 'Suspense']);
     }
 }

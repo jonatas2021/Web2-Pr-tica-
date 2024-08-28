@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use App\Models\Author;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Author;
 
 class AuthorFactory extends Factory
 {
@@ -12,13 +12,8 @@ class AuthorFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->name,
-            'birth_date' => $this->faker->date(),
+            'name' => $this->faker->name(),
+            'birth_date' => $this->faker->date()
         ];
     }
 }
-
-
-
-
-
