@@ -20,3 +20,6 @@ Route::resource('categories', CategoryController::class);
 
 // Rotas para Publishers
 Route::resource('publishers', PublisherController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
