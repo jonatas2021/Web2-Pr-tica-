@@ -7,6 +7,7 @@ use App\Models\Author;
 use App\Models\Publisher;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage; // Importar o Storage para gerenciar os arquivos
 
 class BookController extends Controller
 {
@@ -42,7 +43,14 @@ class BookController extends Controller
             'publisher_id' => 'required|integer',
             'published_year' => 'required|integer',
             'categories' => 'required|array',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validação da imagem
         ]);
+
+        if ($request->hasFile('cover_image')) {
+            // Armazenar a imagem e pegar o caminho
+            $path = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $path;
+        }
 
         $book = Book::create($validatedData);
         $book->categories()->attach($request->categories);
@@ -69,9 +77,22 @@ class BookController extends Controller
             'publisher_id' => 'required|integer',
             'published_year' => 'required|integer',
             'categories' => 'required|array',
+            'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048', // Validação da imagem
         ]);
 
         $book = Book::findOrFail($id);
+
+        if ($request->hasFile('cover_image')) {
+            // Remover a imagem antiga, se existir
+            if ($book->cover_image) {
+                Storage::disk('public')->delete($book->cover_image);
+            }
+
+            // Armazenar a nova imagem
+            $path = $request->file('cover_image')->store('covers', 'public');
+            $validatedData['cover_image'] = $path;
+        }
+
         $book->update($validatedData);
         $book->categories()->sync($request->categories);
 
@@ -82,6 +103,12 @@ class BookController extends Controller
     public function destroy($id)
     {
         $book = Book::findOrFail($id);
+
+        // Remover a imagem da capa, se existir
+        if ($book->cover_image) {
+            Storage::disk('public')->delete($book->cover_image);
+        }
+
         $book->categories()->detach();
         $book->delete();
 

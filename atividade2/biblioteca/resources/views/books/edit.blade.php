@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <h1>Editar Livro</h1>
-        <form action="{{ route('books.update', $book->id) }}" method="POST">
+        <form action="{{ route('books.update', $book->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="mb-3">
@@ -45,6 +45,16 @@
                         </option>
                     @endforeach
                 </select>
+            </div>
+            <div class="mb-3">
+                <label for="cover_image" class="form-label">Imagem de Capa</label>
+                <input type="file" class="form-control" id="cover_image" name="cover_image">
+                @if ($book->cover_image)
+                    <div class="mt-2">
+                        <label class="form-label">Imagem Atual:</label>
+                        <img src="{{ asset('storage/' . $book->cover_image) }}" alt="Capa do Livro" style="max-width: 200px; max-height: 300px;">
+                    </div>
+                @endif
             </div>
             <button type="submit" class="btn btn-primary">Salvar Alterações</button>
             <a href="{{ route('books.index') }}" class="btn btn-secondary">Cancelar</a>
