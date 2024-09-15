@@ -1,33 +1,69 @@
-# Gerar Chave de Criptografia do Laravel
+# Biblioteca Laravel
 
-Este documento fornece um guia sobre como gerar e configurar a chave de criptografia para um aplicativo Laravel.
+Um aplicativo Laravel para gerenciamento de biblioteca com suporte para diferentes papéis de usuários.
 
-## O Que É a Chave de Criptografia?
+## Instalação e Configuração
 
-A chave de criptografia do Laravel é uma chave secreta usada para criptografar dados sensíveis, como sessões e cookies. É crucial para a segurança do seu aplicativo, pois garante que os dados criptografados não possam ser lidos por terceiros.
+1. **Clone o repositório:**
 
-## Gerando a Chave de Criptografia
+    ```bash
+    git clone https://github.com/seu-usuario/seu-repositorio.git
+    cd seu-repositorio
+    ```
 
-Para gerar uma chave de criptografia para seu aplicativo Laravel, siga os passos abaixo:
+2. **Instale as dependências:**
 
-1. **Acesse o Terminal**
+    ```bash
+    composer install
+    ```
 
-   Abra o terminal na raiz do seu projeto Laravel.
+3. **Configure o ambiente:**
 
-2. **Execute o Comando para Gerar a Chave**
+    Copie `.env.example` para `.env`:
 
-   Digite o seguinte comando para gerar uma nova chave de criptografia:
+    ```bash
+    cp .env.example .env
+    ```
 
-   ```bash
-   php artisan key:generate
+4. **Gere a chave de criptografia:**
 
-## Configuração do Armazenamento de Arquivos Públicos
+    ```bash
+    php artisan key:generate
+    ```
 
-Para garantir que arquivos armazenados no diretório de armazenamento sejam acessíveis publicamente, você precisa criar um link simbólico entre o diretório de armazenamento e o diretório público do seu projeto Laravel.
+5. **Crie o link simbólico para o armazenamento de arquivos públicos:**
 
-### Comando Necessário
+    ```bash
+    php artisan storage:link
+    ```
 
-Para criar esse link simbólico, execute o seguinte comando:
+6. **Prepare o banco de dados:**
 
-```bash
-php artisan storage:link
+    Execute migrações e seeders:
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+7. **Usuários padrão:**
+
+    - **Admin**: `admin@biblioteca.com` / `admin123`
+    - **Bibliotecario**: `bibliotecario@biblioteca.com` / `password123`
+    - **Cliente**: `cliente@biblioteca.com` / `password123`
+
+8. **Inicie o servidor:**
+
+    ```bash
+    php artisan serve
+    ```
+
+    Acesse o aplicativo em `http://localhost:8000`.
+
+## Contribuição
+
+Envie pull requests para contribuir.
+
+## Licença
+
+Licenciado sob a [Licença MIT](LICENSE).
+
